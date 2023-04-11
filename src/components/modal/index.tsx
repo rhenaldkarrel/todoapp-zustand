@@ -8,6 +8,7 @@ type TProps = {
 	closeButtonText?: string;
 	children: React.ReactNode;
   actionButtonText: string;
+  coreModalEvent: () => void;
 };
 
 const Modal = ({
@@ -17,6 +18,7 @@ const Modal = ({
 	children,
 	closeButtonText = 'Close',
   actionButtonText,
+  coreModalEvent,
 }: TProps) => {
 	return (
 		<Transition appear show={openModal} as={React.Fragment}>
@@ -63,7 +65,7 @@ const Modal = ({
 									<button
 										type='button'
 										className='btn btn-primary'
-										onClick={() => closeModal(false)}
+										onClick={coreModalEvent}
 									>
 										{actionButtonText}
 									</button>
