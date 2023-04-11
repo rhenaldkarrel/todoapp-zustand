@@ -11,6 +11,11 @@ function App() {
 	const isTodoExists = todoStore.todos.length > 0;
 
 	function addTodo() {
+    if (todoStore.newTodo.title === '') {
+      alert("Title can't be empty");
+      return;
+    }
+
 		todoStore.addTodo();
 		setIsAddNewTask(false);
 	}

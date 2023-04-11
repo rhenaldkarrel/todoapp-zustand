@@ -23,6 +23,11 @@ const TodoItem = ({ todo }: TProps) => {
 	}
 
 	function updateTodo(todoId: number) {
+    if (todoStore.newTodo.title === '') {
+      alert("Title can't be empty");
+      return;
+    }
+
 		todoStore.updateTodo(todoId);
 		setIsEditingTask(false);
 	}
