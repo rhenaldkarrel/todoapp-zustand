@@ -1,14 +1,13 @@
 import React from 'react';
-import useTodoStore, { ITodoItem } from '../../store';
+import useTodoStore, { ITodo } from '../../store';
 import Modal from '../modal';
 import { Input } from '../forms/input';
 
 type TProps = {
-	todoItem: ITodoItem;
-	todoId: number;
+	todo: ITodo;
 };
 
-const TodoItem = ({ todoItem, todoId }: TProps) => {
+const TodoItem = ({ todo }: TProps) => {
 	const [isEditingTask, setIsEditingTask] = React.useState(false);
 	const todoStore = useTodoStore();
 
@@ -31,19 +30,19 @@ const TodoItem = ({ todoItem, todoId }: TProps) => {
 		<React.Fragment>
 			<div className='border p-4 rounded-xl flex justify-between sm:flex-row flex-col sm:space-y-0 space-y-4'>
 				<div className='flex flex-col'>
-					<h2 className='font-bold text-xl'>{todoItem.title}</h2>
-					<p>{todoItem.description}</p>
+					<h2 className='font-bold text-xl'>{todo.todo.title}</h2>
+					<p>{todo.todo.description}</p>
 				</div>
 				<div className='space-x-2'>
 					<button
 						className='btn btn-primary'
-						onClick={() => openEditTodoModal(todoId)}
+						onClick={() => openEditTodoModal(todo.id)}
 					>
 						Edit
 					</button>
 					<button
 						className='btn btn-danger'
-						onClick={() => todoStore.removeTodo(todoId)}
+						onClick={() => todoStore.removeTodo(todo.id)}
 					>
 						Delete
 					</button>
@@ -53,7 +52,7 @@ const TodoItem = ({ todoItem, todoId }: TProps) => {
 				actionButtonText='Update'
 				closeModal={setIsEditingTask}
 				openModal={isEditingTask}
-				coreModalEvent={() => updateTodo(todoId)}
+				coreModalEvent={() => updateTodo(todo.id)}
 				title='Edit Task'
 			>
 				<div className='space-y-4 mt-4'>
