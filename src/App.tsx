@@ -8,31 +8,32 @@ function App() {
 	const [isAddNewTask, setIsAddNewTask] = React.useState<boolean>(false);
 
 	const todoStore = useTodoStore();
-  const isTodoExists = todoStore.todos.length > 0;
+	const isTodoExists = todoStore.todos.length > 0;
 
-	function openModal() {
-		setIsAddNewTask(true);
+	function addTodo() {
+		todoStore.addTodo();
+		setIsAddNewTask(false);
 	}
-
-  function addTodo() {
-    todoStore.addTodo();
-    setIsAddNewTask(false);
-  }
 
 	return (
 		<main className='max-w-lg mx-auto border h-screen'>
 			<div className='p-4 space-y-4'>
 				<h1 className='text-xl sm:text-3xl font-bold'>My Todo List</h1>
-        <div className='todos space-y-4'>
-					{isTodoExists ? todoStore.todos.map((todo) => (
-						<TodoItem
-              key={todo.id}
-              todoId={todo.id}
-              todoItem={todo.todo}
-            />
-					)) : <p className='text-gray-500 text-center'>All done! Create new todo to manage your day.</p>}
+				<div className='todos space-y-4'>
+					{isTodoExists ? (
+						todoStore.todos.map((todo) => (
+							<TodoItem key={todo.id} todoId={todo.id} todoItem={todo.todo} />
+						))
+					) : (
+						<p className='text-gray-500 text-center'>
+							All done! Create new todo to manage your day.
+						</p>
+					)}
 				</div>
-				<button className='btn btn-primary w-full' onClick={openModal}>
+				<button
+					className='btn btn-primary w-full'
+					onClick={() => setIsAddNewTask(true)}
+				>
 					Add New Task
 				</button>
 				<Modal
