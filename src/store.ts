@@ -16,6 +16,7 @@ type Store = {
 	newTodo: ITodoItem;
 	addTodo: () => void;
 	setNewTodo: (todoItem: ITodoItem) => void;
+  removeTodo: (id: number) => void;
 };
 
 const useTodoStore = create<Store>((set) => ({
@@ -42,6 +43,16 @@ const useTodoStore = create<Store>((set) => ({
 			};
 		});
 	},
+  removeTodo(id: number) {
+    set(state => {
+      const updatedTodos = state.todos.filter(todo => todo.id !== id);
+
+      return {
+        ...state,
+        todos: updatedTodos,
+      }
+    })
+  },
 	setNewTodo(todoItem: ITodoItem) {
 		set((state) => ({
 			...state,

@@ -27,6 +27,7 @@ function App() {
 					{isTodoExists ? todoStore.todos.map((todo) => (
 						<TodoItem
               key={todo.id}
+              todoId={todo.id}
               todoItem={todo.todo}
             />
 					)) : <p className='text-gray-500 text-center'>All done! Create new todo to manage your day.</p>}
