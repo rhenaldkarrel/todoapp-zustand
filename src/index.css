@@ -9,3 +9,7 @@
 .btn-primary {
   @apply bg-slate-800 text-white;
 }
+
+.btn-danger {
+  @apply bg-red-500 text-white;
+}
