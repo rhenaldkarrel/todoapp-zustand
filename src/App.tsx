@@ -22,7 +22,7 @@ function App() {
 				<div className='todos space-y-4'>
 					{isTodoExists ? (
 						todoStore.todos.map((todo) => (
-							<TodoItem key={todo.id} todoId={todo.id} todoItem={todo.todo} />
+							<TodoItem key={todo.id} todo={todo} />
 						))
 					) : (
 						<p className='text-gray-500 text-center'>

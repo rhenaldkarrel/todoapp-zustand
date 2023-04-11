@@ -20,6 +20,7 @@ type Store = {
 	setToBeUpdatedTodo: (todoItem: ITodoItem) => void;
 	removeTodo: (id: number) => void;
 	updateTodo: (id: number) => void;
+  markAsDone: (id:number) => void;
 };
 
 const useTodoStore = create<Store>((set) => ({
@@ -95,6 +96,21 @@ const useTodoStore = create<Store>((set) => ({
 			toBeUpdatedTodo: todoItem,
 		}));
 	},
+  markAsDone(id: number) {
+    set((state) => {
+      const updatedTodo = state.todos.map(todo => {
+        return {
+          ...todo,
+          isDone: todo.id === id ? !todo.isDone : todo.isDone,
+        }
+      })
+
+      return {
+        ...state,
+        todos: updatedTodo,
+      }
+    })
+  }
 }));
 
 export default useTodoStore;

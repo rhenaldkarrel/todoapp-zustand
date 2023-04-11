@@ -2,6 +2,7 @@ import React from 'react';
 import useTodoStore, { ITodo } from '../../store';
 import Modal from '../modal';
 import { Input } from '../forms/input';
+import clsx from 'clsx';
 
 type TProps = {
 	todo: ITodo;
@@ -28,14 +29,28 @@ const TodoItem = ({ todo }: TProps) => {
 
 	return (
 		<React.Fragment>
-			<div className='border p-4 rounded-xl flex justify-between sm:flex-row flex-col sm:space-y-0 space-y-4'>
-				<div className='flex flex-col'>
+			<div className='border p-4 rounded-xl flex justify-between sm:flex-row flex-col sm:space-y-0 space-y-4 items-center'>
+				<div className='mr-4'>
+					<input
+						type='checkbox'
+						title='Mark as done'
+						checked={todo.isDone}
+						onChange={() => todoStore.markAsDone(todo.id)}
+					/>
+				</div>
+				<div className={clsx(
+          'flex flex-col grow',
+          todo.isDone && 'line-through'
+        )}>
 					<h2 className='font-bold text-xl'>{todo.todo.title}</h2>
 					<p>{todo.todo.description}</p>
 				</div>
 				<div className='space-x-2'>
 					<button
-						className='btn btn-primary'
+						className={clsx(
+              'btn btn-primary',
+              todo.isDone && 'hidden'
+            )}
 						onClick={() => openEditTodoModal(todo.id)}
 					>
 						Edit
