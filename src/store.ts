@@ -14,14 +14,21 @@ export interface ITodo {
 type Store = {
 	todos: ITodo[];
 	newTodo: ITodoItem;
+	toBeUpdatedTodo: ITodoItem;
 	addTodo: () => void;
 	setNewTodo: (todoItem: ITodoItem) => void;
-  removeTodo: (id: number) => void;
+	setToBeUpdatedTodo: (todoItem: ITodoItem) => void;
+	removeTodo: (id: number) => void;
+	updateTodo: (id: number) => void;
 };
 
 const useTodoStore = create<Store>((set) => ({
 	todos: [],
 	newTodo: {
+		title: '',
+		description: '',
+	},
+	toBeUpdatedTodo: {
 		title: '',
 		description: '',
 	},
@@ -43,20 +50,49 @@ const useTodoStore = create<Store>((set) => ({
 			};
 		});
 	},
-  removeTodo(id: number) {
-    set(state => {
-      const updatedTodos = state.todos.filter(todo => todo.id !== id);
+	updateTodo(id: number) {
+		set((state) => {
+			const toBeUpdatedTodo = state.todos.find((todo) => todo.id === id)!;
 
-      return {
-        ...state,
-        todos: updatedTodos,
-      }
-    })
-  },
+			const updatedTodo = {
+				...toBeUpdatedTodo,
+				todo: state.toBeUpdatedTodo,
+			};
+
+			const updatedTodos = state.todos.map((todo) =>
+				todo.id === id ? updatedTodo : todo
+			);
+
+			return {
+				...state,
+				todos: updatedTodos,
+				toBeUpdatedTodo: {
+					title: '',
+					description: '',
+				},
+			};
+		});
+	},
+	removeTodo(id: number) {
+		set((state) => {
+			const updatedTodos = state.todos.filter((todo) => todo.id !== id);
+
+			return {
+				...state,
+				todos: updatedTodos,
+			};
+		});
+	},
 	setNewTodo(todoItem: ITodoItem) {
 		set((state) => ({
 			...state,
 			newTodo: todoItem,
+		}));
+	},
+	setToBeUpdatedTodo(todoItem: ITodoItem) {
+		set((state) => ({
+			...state,
+			toBeUpdatedTodo: todoItem,
 		}));
 	},
 }));
